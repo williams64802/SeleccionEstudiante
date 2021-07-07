@@ -115,4 +115,8 @@ class AsignaturaTestCase ( unittest.TestCase ) :
 
         self.assertEqual("Estructura de datos",asignatura.nombreAsignatura)
 
+    def test_agregar_asignatura_vacia(self):
+        resultado = self.sorteo.agregar_asignatura("")
+        self.assertFalse(resultado)
+
 
