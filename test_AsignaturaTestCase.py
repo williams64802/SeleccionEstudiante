@@ -115,4 +115,30 @@ class AsignaturaTestCase ( unittest.TestCase ) :
 
         self.assertEqual("Estructura de datos",asignatura.nombreAsignatura)
 
+    def test_agregar_asignatura_vacia(self):
+        resultado = self.sorteo.agregar_asignatura("")
+        self.assertFalse(resultado)
+
+    def test_agregar_estudiante(self):
+        resultado = self.sorteo.agregar_estudiante(apellidoPaterno="Sanabria", apellidoMaterno="Tinoco",
+                                                   nombres="Williams", elegible=True)
+        self.assertEqual(resultado, True)
+
+    def test_agregar_estudiante_repetido(self):
+        resultado = self.sorteo.agregar_estudiante(apellidoPaterno="Garcia", apellidoMaterno="Mateo",
+                                                   nombres="Miguel Angel", elegible=True)
+        self.assertNotEqual(resultado, True)
+
+
+    def test_verificar_almacenamiento_agregar_estudiante(self):
+        self.sorteo.agregar_estudiante(apellidoPaterno="Sanabria", apellidoMaterno="Tinoco", nombres="Williams Anthony",
+                                       elegible=True)
+        self.session = Session()
+        estudiante = self.session.query(Estudiante).filter(Estudiante.nombres == "Williams Anthony").first()
+
+        self.assertEqual("Williams Anthony", estudiante.nombres)
+
+    def test_agregar_estudiante_vacio(self):
+        resultado = self.sorteo.agregar_estudiante(apellidoPaterno="", apellidoMaterno="", nombres="", elegible=True)
+        self.assertFalse(resultado)
 
